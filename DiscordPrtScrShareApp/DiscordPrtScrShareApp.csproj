@@ -3,6 +3,7 @@
   <PropertyGroup>
 	<OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon>bigfrog2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="3.2.3" />
