@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Drawing;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace DiscordPrtScrShareApp
 {
@@ -20,19 +21,20 @@ namespace DiscordPrtScrShareApp
 
         private readonly string _discordBotToken;
         private readonly string _discordChannelId;
-        private readonly int _prtScrTriggerKey;
+        private readonly int _prtScrTriggerVKey;
 
         public Worker(ILogger<Worker> logger, string[] args)
         {
             _discordBotToken = args[0];
             _discordChannelId = args[1];
-            _prtScrTriggerKey = int.Parse(args[2]);
+            char[] _trim_hex = new char[] { '0', 'x' };
+            int.TryParse(args[2].TrimStart(_trim_hex), NumberStyles.HexNumber, null, out _prtScrTriggerVKey);
 
             _logger = logger;
             _logger.LogInformation("DiscordPrtScrShareApp is initiating.");
             _input = new KeyboardInput();
             _input.KeyPressed += _input_KeyPressed;
-            _logger.LogInformation($"DiscordPrtScrShareApp KeyInput is : {_prtScrTriggerKey}, {(Key)_prtScrTriggerKey}");
+            _logger.LogInformation($"DiscordPrtScrShareApp KeyInput is : {_prtScrTriggerVKey}, {KeyInterop.KeyFromVirtualKey(_prtScrTriggerVKey)}");
             _discord = new DiscordClient(new DiscordConfiguration
             {
                 Token = _discordBotToken,
@@ -92,8 +94,8 @@ namespace DiscordPrtScrShareApp
 
         private async void _input_KeyPressed(int vKey)
         {
-            _logger.LogInformation($"DiscordPrtScrShareApp registered vkey input : {KeyInterop.KeyFromVirtualKey(vKey)}. Trigger vkey is : {KeyInterop.KeyFromVirtualKey(_prtScrTriggerKey)}");
-            if (KeyInterop.KeyFromVirtualKey(vKey) == (Key)_prtScrTriggerKey)
+            _logger.LogInformation($"DiscordPrtScrShareApp registered vkey input : {KeyInterop.KeyFromVirtualKey(vKey)}. Trigger vkey is : {KeyInterop.KeyFromVirtualKey(_prtScrTriggerVKey)}");
+            if (KeyInterop.KeyFromVirtualKey(vKey) == KeyInterop.KeyFromVirtualKey(_prtScrTriggerVKey))
                 await SendPrtScrToDiscord();
         }
 

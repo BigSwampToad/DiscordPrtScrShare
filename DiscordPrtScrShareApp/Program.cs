@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +33,8 @@ namespace DiscordPrtScrShareApp
                     Log.Information("Usage: String <DiscordBotToken> String <ChannelId> Int <VirtualKeyTrigger>");
                     return;
                 }
-                if (!int.TryParse(args[2], out var vkey))
+                char[] _trim_hex = new char[] { '0', 'x' };
+                if (!int.TryParse(args[2].TrimStart(_trim_hex), NumberStyles.HexNumber, null, out var vkey))
                 {
                     Log.Information("The third parameter must be an integer.");
                     Log.Information("Usage: String <DiscordBotToken> String <ChannelId> Int <VirtualKeyTrigger>");

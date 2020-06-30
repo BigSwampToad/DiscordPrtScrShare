@@ -5,7 +5,7 @@
     <UserSecretsId>dotnet-DiscordPrtScrShare-B1F96970-5C26-4F6E-AB58-B323F1E8687E</UserSecretsId>
     <OutputType>Exe</OutputType>
     <StartupObject>DiscordPrtScrShareService.Program</StartupObject>
-    <ApplicationIcon>bigfrog2.ico</ApplicationIcon>
+    <ApplicationIcon>bifrogimg.ico</ApplicationIcon>
 	<RuntimeIdentifier>win7-x64</RuntimeIdentifier>
   </PropertyGroup>
 
